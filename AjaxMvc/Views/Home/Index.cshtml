@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-left">
+    <h1 class="display-4">Movies</h1>
+</div>
+
+<div>
+    <label>Movie ID</label>
+    <input id="inputId">
+    <button id="htmlButt" onclick="GetHtml()">GET HTML</button>
+    <button id="jsonButt" onclick="GetJson()">GET JSON</button>
+</div>
+
+<div id="response">
+
+</div>
+
+<script>
+    const myDiv = document.getElementById("response");
+    var inputID = document.getElementById("inputId");
+
+
+    function GetHtml(){
+
+        fetch(`index/${inputID.value}`,{
+            method: "get",
+        })
+        .then(result => result.text())
+        .then(html => myDiv.innerHTML = html); 
+    }
+
+    function GetJson(){
+
+        fetch(`index/json/${inputID.value}`,{
+            method: "get",
+        })
+        .then(result => result.json())
+        .then(obj => {
+            myDiv.innerText = obj.title, obj.description
+        });
+    }
+    function GetJsonA(){
+        $.ajax({
+            url: `index/json/${inputID.value}`,
+            type: "GET",
+            success: result =>
+            $("#response").text(result.title)
+        });
+    }
+
+
+</script>
